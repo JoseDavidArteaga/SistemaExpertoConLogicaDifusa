@@ -1,0 +1,140 @@
+<div class="charts-container">
+  <mat-card class="charts-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>analytics</mat-icon>
+        Gráficas de Defuzzificación por Centro de Gravedad
+      </mat-card-title>
+      <mat-card-subtitle>
+        Visualización del proceso de defuzzificación para cada variable de entrada. Las líneas punteadas muestran las funciones de pertenencia como guías.
+      </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="legend-info">
+        <div class="legend-item">
+          <div class="legend-dot dashed"></div>
+          <span>Funciones de pertenencia base (guías)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot solid-blue"></div>
+          <span>Figura resultante combinada</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot centroid"></div>
+          <span>Centroide (valor defuzzificado)</span>
+        </div>
+      </div>
+
+      <mat-tab-group class="charts-tabs" animationDuration="300ms">
+        <!-- Satisfacción -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>sentiment_satisfied</mat-icon>
+            <span class="tab-label">Satisfacción</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Satisfacción</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.satisfaccion }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('satisfaccion') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #satisfactionCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Aprendizaje -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>school</mat-icon>
+            <span class="tab-label">Aprendizaje</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Aprendizaje</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.aprendizaje }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('aprendizaje') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #learningCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Desempeño -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>trending_up</mat-icon>
+            <span class="tab-label">Desempeño</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Desempeño</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.desempeno }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('desempeno') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #performanceCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Clima -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>wb_sunny</mat-icon>
+            <span class="tab-label">Clima</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Clima Laboral</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.clima }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('clima') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #climateCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Disciplina -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>rule</mat-icon>
+            <span class="tab-label">Disciplina</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Disciplina</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.disciplina }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('disciplina') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #disciplineCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Impacto Económico -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>attach_money</mat-icon>
+            <span class="tab-label">Económico</span>
+          </ng-template>
+          <div class="chart-container">
+            <div class="chart-info">
+              <h4>Variable: Factores Económicos</h4>
+              <p><strong>Valor de entrada:</strong> {{ inputData?.economicos }}/10</p>
+              <p><strong>Centroide calculado:</strong> {{ getDefuzzifiedValue('economicos') | number:'1.2-2' }}</p>
+            </div>
+            <div class="chart-wrapper">
+              <canvas #economicCanvas></canvas>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

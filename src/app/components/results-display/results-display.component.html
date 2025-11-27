@@ -1,0 +1,77 @@
+<div class="results-container" *ngIf="results">
+  <mat-card class="result-card">
+    <mat-card-header>
+      <mat-card-title>Resultados del Análisis</mat-card-title>
+      <mat-card-subtitle>Evaluación del impacto de la capacitación</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <!-- Impacto Individual -->
+      <div class="metric-section">
+        <div class="metric-header">
+          <h3>Impacto Individual</h3>
+          <mat-chip [color]="getImpactColor(results.impacto_individual)">
+            {{getImpactLevel(results.impacto_individual)}}
+          </mat-chip>
+        </div>
+        <div class="metric-value">{{results.impacto_individual | number:'1.2-2'}} / 10</div>
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="impactoIndividualPercent"
+          [color]="getImpactColor(results.impacto_individual)">
+        </mat-progress-bar>
+        <p class="metric-description">
+          Basado en satisfacción, aprendizaje y desempeño individual
+        </p>
+      </div>
+
+      <!-- Impacto Organizacional -->
+      <div class="metric-section">
+        <div class="metric-header">
+          <h3>Impacto Organizacional</h3>
+          <mat-chip [color]="getImpactColor(results.impacto_organizacional)">
+            {{getImpactLevel(results.impacto_organizacional)}}
+          </mat-chip>
+        </div>
+        <div class="metric-value">{{results.impacto_organizacional | number:'1.2-2'}} / 10</div>
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="impactoOrganizacionalPercent"
+          [color]="getImpactColor(results.impacto_organizacional)">
+        </mat-progress-bar>
+        <p class="metric-description">
+          Basado en clima, disciplina y factores económicos
+        </p>
+      </div>
+
+      <!-- Impacto Total -->
+      <div class="metric-section highlight">
+        <div class="metric-header">
+          <h3>Impacto Total</h3>
+          <mat-chip [color]="getImpactColor(results.impacto_total)">
+            {{getImpactLevel(results.impacto_total)}}
+          </mat-chip>
+        </div>
+        <div class="metric-value large">{{results.impacto_total | number:'1.2-2'}} / 10</div>
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="impactoTotalPercent"
+          [color]="getImpactColor(results.impacto_total)"
+          class="large-progress">
+        </mat-progress-bar>
+        <p class="metric-description">
+          Evaluación integral del impacto de la capacitación
+        </p>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="no-results" *ngIf="!results">
+  <mat-card>
+    <mat-card-content>
+      <p>Complete el formulario y haga clic en "Evaluar Impacto" para ver los resultados.</p>
+    </mat-card-content>
+  </mat-card>
+</div>

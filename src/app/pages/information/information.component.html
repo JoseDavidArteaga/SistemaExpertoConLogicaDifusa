@@ -1,0 +1,275 @@
+<div class="information-container">
+  
+  <!-- Header Principal -->
+  <div class="header-section">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>psychology</mat-icon>
+          Sistema Híbrido de Evaluación de Impacto
+        </mat-card-title>
+        <mat-card-subtitle>
+          Combinando Lógica Difusa con Sistemas Expertos para la Evaluación de Capacitaciones
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="welcome-text">
+          Este sistema utiliza <strong>Inteligencia Artificial</strong> para evaluar el impacto de las capacitaciones 
+          empresariales mediante la combinación de <strong>Lógica Difusa</strong> y <strong>Sistemas Expertos</strong>. 
+          La integración de estas tecnologías permite un análisis preciso y flexible de múltiples variables de impacto.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Tabs Principales -->
+  <mat-card class="main-content-card">
+    <mat-tab-group class="info-tabs" animationDuration="300ms">
+      
+      <!-- Tab 1: Visión General del Sistema -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>dashboard</mat-icon>
+          <span>Visión General</span>
+        </ng-template>
+        
+        <div class="tab-content">
+          <h2>Arquitectura del Sistema Híbrido</h2>
+          
+          <div class="process-flow">
+            <div class="process-step" *ngFor="let step of hibridoProcess; let i = index">
+              <div class="step-number">{{ step.paso }}</div>
+              <div class="step-content">
+                <h4>{{ step.titulo }}</h4>
+                <p>{{ step.descripcion }}</p>
+                <mat-chip class="tech-chip">{{ step.tecnologia }}</mat-chip>
+              </div>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="benefits-section">
+            <h3>Beneficios del Sistema Híbrido</h3>
+            <div class="benefits-grid">
+              <div class="benefit-card">
+                <mat-icon>precision_manufacturing</mat-icon>
+                <h4>Precisión</h4>
+                <p>La lógica difusa maneja la incertidumbre y los sistemas expertos aportan conocimiento estructurado</p>
+              </div>
+              <div class="benefit-card">
+                <mat-icon>speed</mat-icon>
+                <h4>Velocidad</h4>
+                <p>Evaluación automática e instantánea de múltiples variables complejas</p>
+              </div>
+              <div class="benefit-card">
+                <mat-icon>insights</mat-icon>
+                <h4>Insights</h4>
+                <p>Visualización clara de los factores que influyen en el impacto de la capacitación</p>
+              </div>
+              <div class="benefit-card">
+                <mat-icon>tune</mat-icon>
+                <h4>Flexibilidad</h4>
+                <p>Adaptable a diferentes tipos de capacitación y contextos organizacionales</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Tab 2: Lógica Difusa -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>blur_on</mat-icon>
+          <span>Lógica Difusa</span>
+        </ng-template>
+        
+        <div class="tab-content">
+          <h2>Variables y Conjuntos Difusos</h2>
+          <p class="section-description">
+            La lógica difusa permite manejar la imprecisión inherente en las evaluaciones humanas, 
+            utilizando conjuntos difusos que representan conceptos como "satisfacción alta" o "impacto moderado".
+          </p>
+
+          <mat-expansion-panel class="variable-panel" *ngFor="let variable of fuzzyVariables">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>category</mat-icon>
+                {{ variable.nombre }}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ variable.descripcion }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="variable-content">
+              <h4>Conjuntos Difusos:</h4>
+              <div class="conjuntos-grid">
+                <div class="conjunto-card" *ngFor="let conjunto of variable.conjuntos">
+                  <div class="conjunto-header">
+                    <span class="conjunto-name">{{ conjunto.nombre }}</span>
+                    <mat-chip [class]="'nivel-' + conjunto.nombre.toLowerCase()">{{ conjunto.rango }}</mat-chip>
+                  </div>
+                  <p>{{ conjunto.descripcion }}</p>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+
+          <div class="fuzzy-info">
+            <h3>Características de la Implementación</h3>
+            <ul>
+              <li><strong>Funciones de Pertenencia:</strong> Triangulares con solapamiento para transiciones suaves</li>
+              <li><strong>Fuzzificación:</strong> Conversión de valores numéricos a grados de pertenencia</li>
+              <li><strong>Defuzzificación:</strong> Método del centroide para obtener valores finales</li>
+              <li><strong>Rango de Entrada:</strong> 0-100% para todas las variables</li>
+            </ul>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Tab 3: Sistema Experto -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>smart_toy</mat-icon>
+          <span>Sistema Experto</span>
+        </ng-template>
+        
+        <div class="tab-content">
+          <h2>Base de Conocimiento y Reglas</h2>
+          <p class="section-description">
+            El sistema experto implementado en Prolog contiene el conocimiento de expertos en capacitación 
+            empresarial, estructurado en reglas que determinan el impacto final.
+          </p>
+
+          <div class="rules-section">
+            <div class="rule-category" *ngFor="let category of expertoRules">
+              <h3>{{ category.categoria }}</h3>
+              <div class="rules-list">
+                <div class="rule-item" *ngFor="let regla of category.reglas; let i = index">
+                  <div class="rule-number">{{ i + 1 }}</div>
+                  <div class="rule-text">{{ regla }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="prolog-info">
+            <h3>Implementación en Prolog</h3>
+            <div class="code-explanation">
+              <mat-card class="code-card">
+                <mat-card-header>
+                  <mat-card-title>Ejemplo de Regla en Prolog</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <pre class="code-block">
+% Regla para impacto individual alto
+impacto_individual_alto(Satisfaccion, Aprendizaje, Desempeno) :-
+    Satisfaccion > 80,
+    Aprendizaje > 75.
+
+impacto_individual_alto(Satisfaccion, Aprendizaje, Desempeno) :-
+    Desempeno > 85,
+    Satisfaccion > 70.
+
+% Evaluación de impacto total
+evaluar_impacto_total(Individual, Organizacional, muy_alto) :-
+    Individual = alto,
+    Organizacional = alto.
+                  </pre>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Tab 4: Metodología -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>science</mat-icon>
+          <span>Metodología</span>
+        </ng-template>
+        
+        <div class="tab-content">
+          <h2>Metodología de Evaluación</h2>
+          
+          <div class="methodology-section">
+            <h3>Enfoque Híbrido</h3>
+            <p>
+              La metodología combina la flexibilidad de la lógica difusa para manejar incertidumbre 
+              con la precisión de los sistemas expertos para aplicar conocimiento estructurado.
+            </p>
+
+            <div class="methodology-steps">
+              <div class="method-step">
+                <div class="step-icon">
+                  <mat-icon>input</mat-icon>
+                </div>
+                <div class="step-details">
+                  <h4>1. Recolección de Datos</h4>
+                  <p>Captura de información mediante formularios estructurados con validación en tiempo real</p>
+                </div>
+              </div>
+
+              <div class="method-step">
+                <div class="step-icon">
+                  <mat-icon>transform</mat-icon>
+                </div>
+                <div class="step-details">
+                  <h4>2. Procesamiento Difuso</h4>
+                  <p>Aplicación de funciones de pertenencia para convertir valores numéricos en grados difusos</p>
+                </div>
+              </div>
+
+              <div class="method-step">
+                <div class="step-icon">
+                  <mat-icon>rule</mat-icon>
+                </div>
+                <div class="step-details">
+                  <h4>3. Aplicación de Reglas</h4>
+                  <p>Evaluación mediante el motor de inferencia basado en conocimiento experto</p>
+                </div>
+              </div>
+
+              <div class="method-step">
+                <div class="step-icon">
+                  <mat-icon>analytics</mat-icon>
+                </div>
+                <div class="step-details">
+                  <h4>4. Análisis y Visualización</h4>
+                  <p>Generación de métricas, gráficos interactivos y recomendaciones</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="validation-section">
+            <h3>Validación del Sistema</h3>
+            <div class="validation-grid">
+              <div class="validation-item">
+                <mat-icon>verified</mat-icon>
+                <h4>Consistencia</h4>
+                <p>Verificación de la coherencia entre reglas y resultados esperados</p>
+              </div>
+              <div class="validation-item">
+                <mat-icon>speed</mat-icon>
+                <h4>Rendimiento</h4>
+                <p>Evaluación de tiempos de respuesta y eficiencia computacional</p>
+              </div>
+              <div class="validation-item">
+                <mat-icon>psychology</mat-icon>
+                <h4>Usabilidad</h4>
+                <p>Pruebas de interfaz y experiencia de usuario</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card>
+
+</div>

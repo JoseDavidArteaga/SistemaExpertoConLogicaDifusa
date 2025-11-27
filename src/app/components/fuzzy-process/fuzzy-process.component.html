@@ -1,0 +1,68 @@
+<mat-card class="process-container">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>settings</mat-icon>
+      Proceso de Evaluación Difusa
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Spinner de carga -->
+    <div *ngIf="isLoading" class="loading-section">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Procesando datos con lógica difusa...</p>
+    </div>
+
+    <!-- Pasos del proceso -->
+    <div class="process-steps">
+      <div 
+        *ngFor="let step of getProcessSteps(); let i = index" 
+        class="step-item"
+        [class.completed]="step.completed"
+        [class.active]="!step.completed && (i === 0 || getProcessSteps()[i-1].completed)">
+        
+        <div class="step-icon">
+          <mat-icon *ngIf="step.completed">check_circle</mat-icon>
+          <mat-icon *ngIf="!step.completed && (i === 0 || getProcessSteps()[i-1].completed)">radio_button_unchecked</mat-icon>
+          <mat-icon *ngIf="!step.completed && i > 0 && !getProcessSteps()[i-1].completed">radio_button_unchecked</mat-icon>
+        </div>
+        
+        <div class="step-content">
+          <h4>{{ step.name }}</h4>
+          <p>{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información del procesamiento -->
+    <div *ngIf="inputData" class="input-summary">
+      <h4>Datos de Entrada:</h4>
+      <div class="input-grid">
+        <div class="input-item">
+          <span class="label">Satisfacción:</span>
+          <span class="value">{{ inputData.satisfaccion }}/10</span>
+        </div>
+        <div class="input-item">
+          <span class="label">Aprendizaje:</span>
+          <span class="value">{{ inputData.aprendizaje }}/10</span>
+        </div>
+        <div class="input-item">
+          <span class="label">Desempeño:</span>
+          <span class="value">{{ inputData.desempeno }}/10</span>
+        </div>
+        <div class="input-item">
+          <span class="label">Clima:</span>
+          <span class="value">{{ inputData.clima }}/10</span>
+        </div>
+        <div class="input-item">
+          <span class="label">Disciplina:</span>
+          <span class="value">{{ inputData.disciplina }}/10</span>
+        </div>
+        <div class="input-item">
+          <span class="label">Económicos:</span>
+          <span class="value">{{ inputData.economicos }}/10</span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
