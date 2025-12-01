@@ -19,7 +19,7 @@ Chart.register(...registerables);
 export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() inputData: InputData | null = null;
   @Input() result: FuzzyResult | null = null;
-  
+
   @ViewChild('satisfactionCanvas') satisfactionCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('learningCanvas') learningCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('performanceCanvas') performanceCanvas!: ElementRef<HTMLCanvasElement>;
@@ -46,7 +46,7 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
 
   private createCharts() {
     this.destroyCharts();
-    
+
     if (!this.inputData) return;
 
     const variables = [
@@ -72,7 +72,7 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
   // Método público para obtener valor defuzzificado
   getDefuzzifiedValue(variable: string): number {
     if (!this.inputData) return 0;
-    
+
     let inputValue: number;
     switch (variable) {
       case 'satisfaccion': inputValue = this.inputData.satisfaccion; break;
@@ -83,12 +83,12 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
       case 'economicos': inputValue = this.inputData.economicos; break;
       default: return 0;
     }
-    
+
     return this.calculateCentroid(inputValue);
   }
 
   // Calcular grados de pertenencia para un valor
-  private getMembershipDegrees(inputValue: number): {bajo: number, medio: number, alto: number} {
+  private getMembershipDegrees(inputValue: number): { bajo: number, medio: number, alto: number } {
     return {
       bajo: this.lowMembership(inputValue),
       medio: this.mediumMembership(inputValue),
@@ -99,65 +99,65 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
   // Calcular centroide usando método del centro de gravedad
   private calculateCentroid(inputValue: number): number {
     const degrees = this.getMembershipDegrees(inputValue);
-    
+
     // Simular evaluación de reglas y crear figura resultante
     let numerator = 0;
     let denominator = 0;
-    
+
     // Rango de valores de salida (0-10)
     for (let x = 0; x <= 10; x += 0.1) {
       // Combinar los conjuntos según las reglas evaluadas
       let outputMembership = 0;
-      
+
       // Regla 1: Si es bajo, la salida tiende a ser baja
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.bajo, this.lowMembership(x)));
-      
+
       // Regla 2: Si es medio, la salida tiende a ser media
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.medio, this.mediumMembership(x)));
-      
+
       // Regla 3: Si es alto, la salida tiende a ser alta
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.alto, this.highMembership(x)));
-      
+
       numerator += x * outputMembership;
       denominator += outputMembership;
     }
-    
+
     return denominator > 0 ? numerator / denominator : inputValue;
   }
 
   private createDefuzzificationChart(canvas: HTMLCanvasElement, label: string, inputValue: number): Chart {
     const ctx = canvas.getContext('2d')!;
-    
+
     // Generar datos para las funciones de pertenencia y la figura resultante (0-10)
-    const xValues = Array.from({length: 101}, (_, i) => i / 10);
+    const xValues = Array.from({ length: 101 }, (_, i) => i / 10);
     const degrees = this.getMembershipDegrees(inputValue);
-    
+
     // Funciones base (en gris claro para referencia) - escala 0-10
     const lowBase = xValues.map(x => this.lowMembership(x));
     const mediumBase = xValues.map(x => this.mediumMembership(x));
     const highBase = xValues.map(x => this.highMembership(x));
-    
+
     // Figura resultante combinada (defuzzificación) - escala 0-10
     const resultShape = xValues.map(x => {
       let outputMembership = 0;
-      
+
       // Combinar según las reglas evaluadas (usando operador MAX)
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.bajo, this.lowMembership(x)));
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.medio, this.mediumMembership(x)));
-      outputMembership = Math.max(outputMembership, 
+      outputMembership = Math.max(outputMembership,
         Math.min(degrees.alto, this.highMembership(x)));
-      
+
       return outputMembership;
     });
-    
+
     // Calcular centroide
     const centroid = this.calculateCentroid(inputValue);
-    
+
     // Crear línea vertical del centroide como dos puntos conectados
 
     const config: ChartConfiguration = {
@@ -252,10 +252,10 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
               color: '#374151',
               usePointStyle: true,
               pointStyle: 'line',
-              filter: function(legendItem, chartData) {
+              filter: function (legendItem, chartData) {
                 // Mostrar solo los datasets más importantes
                 return !!(legendItem.text && (
-                  legendItem.text.includes('Resultado') || 
+                  legendItem.text.includes('Resultado') ||
                   legendItem.text.includes('Centroide')
                 ));
               }
@@ -263,10 +263,10 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
           },
           tooltip: {
             callbacks: {
-              title: function(context) {
+              title: function (context) {
                 return `Valor: ${context[0].label}/10`;
               },
-              label: function(context) {
+              label: function (context) {
                 if (context.dataset.label?.includes('Centroide')) {
                   return `${context.dataset.label} - Centro de Gravedad`;
                 }
@@ -277,6 +277,9 @@ export class MembershipChartsComponent implements OnChanges, AfterViewInit, OnDe
         },
         scales: {
           x: {
+            type: 'linear',
+            min: 0,
+            max: 10,
             title: {
               display: true,
               text: 'Valor de Salida (0-10)',
